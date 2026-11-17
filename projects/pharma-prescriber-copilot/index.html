@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pharma Prescriber Analytics Copilot: Forecasting & Text-to-SQL on Medicare Part D | Case Study</title>
+  <meta name="description" content="Case study: an end-to-end analytics pipeline on real CMS Medicare Part D data (69.7M claims) with prescriber segmentation, Prophet vs XGBoost vs LSTM demand forecasting and an agentic text-to-SQL assistant.">
+  <meta name="author" content="Chinmaya Kumar Nayak">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://chinmaya2310.github.io/projects/pharma-prescriber-copilot/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Chinmaya Kumar Nayak">
+  <meta property="og:title" content="Pharma Prescriber Analytics Copilot: Forecasting & Text-to-SQL on Medicare Part D | Case Study">
+  <meta property="og:description" content="Case study: an end-to-end analytics pipeline on real CMS Medicare Part D data (69.7M claims) with prescriber segmentation, Prophet vs XGBoost vs LSTM demand forecasting and an agentic text-to-SQL assistant.">
+  <meta property="og:url" content="https://chinmaya2310.github.io/projects/pharma-prescriber-copilot/">
+  <meta property="og:image" content="https://chinmaya2310.github.io/assets/og-pharma.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pharma Prescriber Analytics Copilot: Forecasting & Text-to-SQL on Medicare Part D | Case Study">
+  <meta name="twitter:description" content="Case study: an end-to-end analytics pipeline on real CMS Medicare Part D data (69.7M claims) with prescriber segmentation, Prophet vs XGBoost vs LSTM demand forecasting and an agentic text-to-SQL assistant.">
+  <meta name="twitter:image" content="https://chinmaya2310.github.io/assets/og-pharma.png">
+  <meta name="google-site-verification" content="30sAjotF1Gglg-_EVpD2LCbYcUsk-VZQFdx3HA7s4Ac">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "Pharma Prescriber Analytics Copilot", "description": "Case study: an end-to-end analytics pipeline on real CMS Medicare Part D data (69.7M claims) with prescriber segmentation, Prophet vs XGBoost vs LSTM demand forecasting and an agentic text-to-SQL assistant.", "codeRepository": "https://github.com/Chinmaya2310/pharma-prescriber-copilot", "url": "https://chinmaya2310.github.io/projects/pharma-prescriber-copilot/", "image": "https://chinmaya2310.github.io/assets/og-pharma.png", "keywords": "Python, FastAPI, Streamlit, XGBoost, Prophet, SQL", "author": {"@id": "https://chinmaya2310.github.io/#person", "@type": "Person", "name": "Chinmaya Kumar Nayak"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://chinmaya2310.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://chinmaya2310.github.io/#projects"}, {"@type": "ListItem", "position": 3, "name": "Pharma Prescriber Analytics Copilot", "item": "https://chinmaya2310.github.io/projects/pharma-prescriber-copilot/"}]}</script>
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="/assets/style.css">
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G5MBDW1E1F"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G5MBDW1E1F');</script>
+  <script src="/assets/main.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Main navigation">
+      <a class="brand" href="/"><img src="/assets/avatar.svg" width="30" height="30" alt="">Chinmaya Nayak</a>
+      <ul class="nav-links">
+        <li><a href="/#fit">Fit check</a></li>
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <a class="btn" href="/assets/Chinmaya_Nayak_Resume.pdf" download data-track="resume_header" style="padding:8px 14px;font-size:.9rem">Résumé</a>
+      <button class="theme-toggle" type="button" aria-label="Switch between light and dark theme"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#projects">Projects</a> / <span aria-current="page">Pharma Prescriber Analytics Copilot</span></nav>
+    <header class="cs-hero">
+      <span class="eyebrow">Data science · Analytics</span>
+      <h1>Pharma Prescriber Analytics Copilot</h1>
+      <p class="lead">A sales-operations team wants to know which prescribers are growing, how demand for a drug will move next year, and to ask ad-hoc questions without writing SQL. This project answers all three on real public data.</p>
+      <ul class="tags"><li>Python</li><li>FastAPI</li><li>Streamlit</li><li>XGBoost</li><li>Prophet</li><li>SQL</li></ul>
+      <div class="cta-row">
+        <a class="btn" href="https://github.com/Chinmaya2310/pharma-prescriber-copilot" rel="noopener" data-track="project_pharma_casestudy"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>View source on GitHub</a>
+        <a class="btn btn-ghost" href="/#fit" data-track="cta_casestudy_fit_pharma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Check my fit for your role</a>
+      </div>
+      <dl class="facts"><div><dt>Role</dt><dd>Solo, end to end</dd></div><div><dt>Data</dt><dd>CMS Medicare Part D</dd></div><div><dt>Serving</dt><dd>FastAPI + Streamlit</dd></div><div><dt>MLOps</dt><dd>GitHub Actions CI</dd></div></dl>
+    </header>
+    <div class="cs-cover"><img src="/assets/img/cover-pharma.webp" width="1280" height="720" alt="Cover image for the Pharma Prescriber Analytics Copilot case study" fetchpriority="high"></div>
+    <article class="prose">
+<h2>The data</h2>
+<p>Real <strong>CMS Medicare Part D prescriber</strong> data, at the grain each task needs: state-level demand series from 2013 to 2024 for forecasting, and prescriber-level detail from 2022 to 2024 for segmentation. Scope: 4 drugs (Metformin, Atorvastatin, Amoxicillin, Anastrozole) across 4 states (CA, TX, NY, FL).</p>
+<div class="numbers">
+  <div><b>69.7M</b><span>claims</span></div>
+  <div><b>518,946</b><span>provider-drug-year rows</span></div>
+  <div><b>187,436</b><span>prescribers</span></div>
+  <div><b>12 yrs</b><span>of demand history</span></div>
+</div>
+
+<h2>What I built</h2>
+<ul>
+  <li><strong>Pipeline:</strong> ingest → clean → EDA → segmentation → forecasting, rerunnable with one command and checked by GitHub Actions CI on every push.</li>
+  <li><strong>Segmentation:</strong> K-Means clusters prescribers by behaviour; a classifier predicts each prescriber's likely next-period growth.</li>
+  <li><strong>Forecasting:</strong> Prophet vs XGBoost vs LSTM compared with walk-forward cross-validation, so models are judged on years they never saw.</li>
+  <li><strong>Serving:</strong> a FastAPI service (<code>/segments/{npi}</code>, <code>/forecast/{drug}/{region}</code>, <code>/ask</code>) and a Streamlit dashboard.</li>
+  <li><strong>Text-to-SQL assistant:</strong> an agent that writes SQL, runs it read-only, and answers from the actual rows, so every number is auditable.</li>
+  <li><strong>Monitoring:</strong> a retrain job flags drift when forecast error (MAPE) exceeds 1.5× its historical average.</li>
+</ul>
+
+<figure>
+  <img src="/assets/img/pharma-forecast.webp" width="840" height="480" loading="lazy" alt="Line chart of Amoxicillin claims in California from 2013 to 2024 with a Prophet forecast for 2025 and 2026">
+  <figcaption>Amoxicillin demand in California: 12 years of history, the 2020 COVID dip, and the forecast.</figcaption>
+</figure>
+
+<h2>A design decision worth defending</h2>
+<div class="callout"><strong>Why text-to-SQL and not RAG?</strong> The questions this data invites ("which specialty prescribes the most X in CA", "how did claims change year over year") are aggregations: a <code>GROUP BY</code>, not a document search. Generating SQL and answering from real rows avoids made-up numbers.</div>
+
+<figure>
+  <img src="/assets/img/pharma-by-state.webp" width="960" height="600" loading="lazy" alt="Stacked bar chart of 2024 claims by state and drug class for California, Florida, New York and Texas">
+  <figcaption>Claims by state and drug class (2024), from the exploratory analysis.</figcaption>
+</figure>
+
+<h2>What I learned</h2>
+<p>data.cms.gov blocks non-US traffic, so the pipeline supports a rotating US proxy for real downloads and a clearly labelled synthetic fixture for CI. Being explicit about which numbers are real mattered more than any model choice.</p>
+</article>
+
+    <aside class="cs-cta">
+      <h2>Hiring for a role like this?</h2>
+      <p>Grab my one-page résumé, or paste your job description into the fit checker to see how my skills line up.</p>
+      <div class="cta-row">
+        <a class="btn" href="/assets/Chinmaya_Nayak_Resume.pdf" download data-track="resume_casestudy_pharma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download résumé</a>
+        <a class="btn btn-ghost" href="/#contact" data-track="cta_casestudy_contact_pharma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Contact me</a>
+      </div>
+    </aside>
+    <nav class="pager" aria-label="More projects">
+      <a href="/projects/codebase-understanding-engine/"><span>← Previous</span>Codebase Understanding Engine</a>
+      <a href="/projects/safewalk-alzheimers-tracker/"><span>Next →</span>SafeWalk: Alzheimer's Patient Tracker</a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; 2026 Chinmaya Kumar Nayak</span>
+      <span><a href="https://github.com/Chinmaya2310" rel="noopener" data-track="contact_github_footer">GitHub</a> · <a href="mailto:chinmayanayak018@gmail.com" data-track="contact_email_footer">Email</a> · Hand-built static site on GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>
