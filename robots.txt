@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://chinmaya2310.github.io/sitemap.xml
+Sitemap: https://chinmaya2310.github.io/generic-bachat/sitemap.xml
