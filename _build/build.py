@@ -4,17 +4,18 @@ Run:  python3 _build/build.py
 Writes index.html, projects/<slug>/index.html, 404.html and sitemap.xml.
 (_build/ starts with an underscore, so GitHub Pages' Jekyll does not publish it.)
 """
-import json, os, datetime
+import json, os, re, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://chinmaya2310.github.io"
+BASE = "/portfolio"
+SITE = "https://chinmaya2310.github.io" + BASE
 GA = "G-G5MBDW1E1F"
 GSC = "30sAjotF1Gglg-_EVpD2LCbYcUsk-VZQFdx3HA7s4Ac"
 EMAIL = "chinmayanayak018@gmail.com"
 GITHUB = "https://github.com/Chinmaya2310"
 NAME = "Chinmaya Kumar Nayak"
 TODAY = datetime.date.today().isoformat()
-RESUME = "/assets/Chinmaya_Nayak_Resume.pdf"
+RESUME = BASE + "/assets/Chinmaya_Nayak_Resume.pdf"
 
 ICON = {
     "sun": '<svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
@@ -488,6 +489,9 @@ def build_sitemap():
 def write(rel, text):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    if rel.endswith(".html"):
+        # every root-relative link/asset lives under /portfolio now
+        text = re.sub(r'(href|src)="/(?!/|portfolio/)', r'\1="' + BASE + '/', text)
     with open(path, "w") as f:
         f.write(text)
     print("wrote", rel)

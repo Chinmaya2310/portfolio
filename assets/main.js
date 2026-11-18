@@ -58,10 +58,10 @@
 
   function initFit(form) {
     var P = {
-      cue: { name: 'Codebase Understanding Engine', url: '/projects/codebase-understanding-engine/' },
-      pharma: { name: 'Pharma Prescriber Copilot', url: '/projects/pharma-prescriber-copilot/' },
-      safewalk: { name: 'SafeWalk tracker', url: '/projects/safewalk-alzheimers-tracker/' },
-      malaoi: { name: 'MalAOI thesis', url: '/projects/malaoi-gnn-malware-evasion/' },
+      cue: { name: 'Codebase Understanding Engine', url: '/portfolio/projects/codebase-understanding-engine/' },
+      pharma: { name: 'Pharma Prescriber Copilot', url: '/portfolio/projects/pharma-prescriber-copilot/' },
+      safewalk: { name: 'SafeWalk tracker', url: '/portfolio/projects/safewalk-alzheimers-tracker/' },
+      malaoi: { name: 'MalAOI thesis', url: '/portfolio/projects/malaoi-gnn-malware-evasion/' },
       infosys: { name: 'Infosys (10 months)', url: '' },
       ta: { name: 'IIIT Allahabad TA', url: '' },
       mtech: { name: 'M.Tech, IIIT Allahabad', url: '' }
@@ -173,7 +173,7 @@
           gap.map(function (s) { return '<span class="chip">' + esc(s[0]) + '</span>'; }).join('') + '</div>';
       }
       html += '<div class="fit-cta"><p>Like the match? Let\'s talk.</p>' +
-        '<a class="btn" href="/assets/Chinmaya_Nayak_Resume.pdf" download data-track="resume_fit_checker">Download résumé</a>' +
+        '<a class="btn" href="/portfolio/assets/Chinmaya_Nayak_Resume.pdf" download data-track="resume_fit_checker">Download résumé</a>' +
         '<a class="btn btn-ghost" href="#contact" data-track="cta_fit_contact">Contact me</a></div>';
       out.innerHTML = html;
       out.setAttribute('tabindex', '-1');
